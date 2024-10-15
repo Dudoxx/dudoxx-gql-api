@@ -23,15 +23,16 @@ class OdooGraphQLClient:
         response = self.session.post(login_url, json=payload, headers=headers)
         response.raise_for_status()
         result = response.json().get('result')
+        print("Authentication response:", response.json())  # Debugging line
         if not result or not result.get('uid'):
             raise Exception("Authentication failed")
-        self.session_id = result['session_id']
+        self.uid = str(result['uid'])  # Convert uid to string
 
     def execute_query(self, query):
         graphql_url = f"{self.url}/graphql"
         headers = {
             'Content-Type': 'application/json',
-            'X-Openerp-Session-Id': self.session_id
+            'X-Openerp-Session-Id': self.uid  # Use uid as a string
         }
         response = self.session.post(graphql_url, json={'query': query}, headers=headers)
         response.raise_for_status()
