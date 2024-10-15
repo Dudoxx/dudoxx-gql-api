@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "express": "^4.21.1",
+    "express-graphql": "^0.12.0"
+  }
+}
